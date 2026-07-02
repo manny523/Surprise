@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise For You ❤️</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffd1dc 0%, #ff9a9e 100%);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --primary-pink: #ff4b72;
+            --dark-text: #4a2c35;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Background Hearts */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            animation: floatUp 8s linear infinite;
+            bottom: -100px;
+            z-index: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Card Container */
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 75, 114, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            transition: all 0.5s ease;
+        }
+
+        /* Section Visibility */
+        .section {
+            display: none;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Elements */
+        h1 {
+            color: var(--primary-pink);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--dark-text);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .icon-large {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Countdown Timer Display */
+        #timer-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-pink);
+            background: #fff0f3;
+            padding: 1rem;
+            border-radius: 15px;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        /* Inputs & Buttons */
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ffccd5;
+            border-radius: 12px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        input[type="password"]:focus {
+            border-color: var(--primary-pink);
+        }
+
+        button {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(255, 75, 114, 0.3);
+            transition: transform 0.2s, background 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #e6395e;
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #d90429;
+            font-size: 0.85rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Animated Hearts -->
+    <div id="heart-container"></div>
+
+    <div class="card">
+        
+        <!-- SECTION 1: TIME LOCK SCREEN -->
+        <div id="time-lock-section" class="section">
+            <div class="icon-large">🔒💖</div>
+            <h1>Patience, My Love...</h1>
+            <p>This surprise is locked until <strong>10:00 PM tonight</strong>. Good things come to those who wait!</p>
+            <div id="timer-display">00:00:00</div>
+            <p style="font-size: 0.8rem; opacity: 0.7;">Come back right at 10 PM to unlock it!</p>
+        </div>
+
+        <!-- SECTION 2: PASSWORD ENTRY SCREEN -->
+        <div id="password-section" class="section">
+            <div class="icon-large">💌</div>
+            <h1>Time to Unlock!</h1>
+            <p>It's finally 10:00 PM! Enter the secret password below to see what's inside.</p>
+            <input type="password" id="password-input" placeholder="Enter secret password..." />
+            <div id="error-message" class="error-msg">Incorrect password! Try again, sweetie. ❤️</div>
+            <button onclick="checkPassword()">Unlock Surprise ✨</button>
+        </div>
+
+        <!-- SECTION 3: WELCOME INTERFACE -->
+        <div id="welcome-section" class="section">
+            <div class="icon-large">🥰🌸</div>
+            <h1>Welcome, Beautiful! ❤️</h1>
+            <p>You made it inside! I made this little corner just for you to brighten up your night.</p>
+            <p style="background: #fff0f3; padding: 1rem; border-radius: 12px; font-style: italic;">
+                "Every second spent with you is like a wonderful dream come true."
+            </p>
+            <button onclick="nextStep()" style="margin-top: 1rem;">Click to Continue 💖</button>
+        </div>
+
+    </div>
+
+    <script>
+        // ==========================================
+        // CONFIGURATION SETTINGS
+        // ==========================================
+        const SECRET_PASSWORD = "love"; // <-- CHANGE THIS to your desired password!
+        const TEST_MODE = false;        // <-- Set to 'true' to bypass the 10 PM wait time immediately for testing.
+
+        // Generate floating background hearts
+        const heartContainer = document.getElementById('heart-container');
+        const hearts = ['❤️', '💖', '🌸', '✨', '💌'];
+        for (let i = 0; i < 15; i++) {
+            const div = document.createElement('div');
+            div.className = 'bg-heart';
+            div.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            div.style.animationDelay = (Math.random() * 5) + 's';
+            div.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+            heartContainer.appendChild(div);
+        }
+
+        // Set Target Time: Today at 10:00 PM (22:00:00)
+        const targetTime = new Date();
+        targetTime.setHours(22, 0, 0, 0);
+
+        function updateScreenState() {
+            const now = new Date();
+
+            // If Test Mode is ON or it is past 10:00 PM tonight
+            if (TEST_MODE || now >= targetTime) {
+                showSection('password-section');
+                clearInterval(timerInterval);
+            } else {
+                showSection('time-lock-section');
+                updateCountdown(now);
+            }
+        }
+
+        function updateCountdown(now) {
+            const diff = targetTime - now;
+            
+            if (diff <= 0) {
+                updateScreenState();
+                return;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('timer-display').innerText = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-message');
+
+            if (input === SECRET_PASSWORD) {
+                errorMsg.style.display = 'none';
+                showSection('welcome-section');
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        // Allow pressing "Enter" key to submit password
+        document.getElementById('password-input')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        function nextStep() {
+            // Placeholder trigger for your next steps!
+            alert('Ready for the next part!'); 
+        }
+
+        // Check time immediately, then check every second
+        updateScreenState();
+        const timerInterval = setInterval(updateScreenState, 1000);
+    </script>
+</body>
+</html>
