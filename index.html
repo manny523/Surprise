@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6; /* Soft, cosy pink background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 105, 135, 0.2);
+            max-width: 400px;
+            width: 90%;
+            transition: opacity 0.5s ease;
+        }
+        h1 { 
+            color: #ff4d6d; 
+            margin-bottom: 10px;
+        }
+        p { 
+            color: #555; 
+            font-size: 1.1em; 
+            line-height: 1.5; 
+        }
+        input[type="password"] {
+            padding: 12px;
+            margin: 20px 0;
+            width: 80%;
+            border: 2px solid #ffb3c6;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+        }
+        input[type="password"]:focus {
+            border-color: #ff4d6d;
+        }
+        button {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        button:hover { 
+            background-color: #c9184a; 
+            transform: scale(1.05);
+        }
+        .hidden { 
+            display: none; 
+        }
+        .heart { 
+            font-size: 60px; 
+            margin-bottom: 10px;
+            animation: heartbeat 1.5s infinite; 
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Screen 1: Time Check & Password -->
+    <div id="login-screen" class="card">
+        <h1>Secret Access 💖</h1>
+        <p id="message">Checking the time...</p>
+        
+        <div id="password-section" class="hidden">
+            <p>It's time! Enter our secret password:</p>
+            <input type="password" id="passInput" placeholder="Type here...">
+            <br>
+            <button onclick="checkPassword()">Unlock</button>
+            <p id="error-msg" style="color: #c9184a; font-size: 0.9em; display: none; margin-top: 15px;">
+                Oops! That's not the right password. Try again!
+            </p>
+        </div>
+    </div>
+
+    <!-- Screen 2: Romantic Welcome -->
+    <div id="welcome-screen" class="card hidden">
+        <div class="heart">❤️</div>
+        <h1>Welcome, My Love</h1>
+        <p>I've been waiting all day to show you this.<br>Every moment leading up to 10 PM was worth it.</p>
+        <!-- The next parts of your surprise will go here -->
+    </div>
+
+    <script>
+        // --- SETUP YOUR PASSWORD HERE ---
+        const SECRET_PASSWORD = "love"; 
+
+        function checkTime() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            // To test the interface right now without waiting, you can temporarily 
+            // change `currentHour >= 22` to `currentHour >= 0`
+            if (currentHour >= 22) { 
+                document.getElementById('message').style.display = 'none';
+                document.getElementById('password-section').classList.remove('hidden');
+            } else {
+                document.getElementById('message').innerText = "It's not 10 PM yet! No peeking. 😉 Come back tonight.";
+            }
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passInput').value;
+            if (input === SECRET_PASSWORD) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('welcome-screen').classList.remove('hidden');
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        // Run the time check as soon as the page loads
+        checkTime();
+    </script>
+
+</body>
+</html>
